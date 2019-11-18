@@ -7,7 +7,8 @@ import random
 
 class clientGame:
     def __init__(self):
-        # Pygame setup
+        # Pygame setup 
+        # Test commit
         pygame.init()
         self.SCREEN_WIDTH = 800
         self.SCREEN_HEIGHT = 800
