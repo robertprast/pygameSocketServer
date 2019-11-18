@@ -11,9 +11,6 @@ class clientThread(threading.Thread):
         self.headerLength = 10
         while True:
             try:
-                # CHANGE client.py and here to update game server data and
-                # local data
-                # implemented rn is passing entire gameServerData dict
                 msg = self.recieveHeader()
                 if msg:
                     if msg == "get_game_data":
