@@ -7,7 +7,7 @@ import random
 
 class clientGame:
     def __init__(self):
-        # Pygame setup 
+        # Pygame setup
         # Test commit
         pygame.init()
         self.SCREEN_WIDTH = 800
@@ -18,6 +18,7 @@ class clientGame:
         self.playerColor = (random.randint(0, 255), random.randint(
             0, 255), random.randint(0, 255))
         self.clock = pygame.time.Clock()
+        pygame.display.set_caption("Test Game")
         # Client network setup
         self._client = clientConnection()
         self.id = self._client.id
@@ -49,20 +50,30 @@ class clientGame:
 
             # Get the full game data
             gameData = self.getGameData()
+            localPlayer = gameData["players"][self.id]
+
             # Perform player actions here
             if gameData != None:
-                gameData["players"][self.id]["position"][1] += random.randint(
-                    -1, 1)
-                gameData["players"][self.id]["position"][0] += random.randint(
-                    -1, 1)
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_w]:
+                    localPlayer['position'][1] -= 1
+                if keys[pygame.K_a]:
+                    localPlayer['position'][0] -= 1
+                if keys[pygame.K_d]:
+                    localPlayer['position'][0] += 1
+                if keys[pygame.K_s]:
+                    localPlayer['position'][1] += 1
             else:
                 print("ERROR in gamedata")
                 print(gameData)
+                continue
+
             # Draw game
+            gameData["players"][self.id] = localPlayer
             self.drawGame(gameData)
 
             # Send player data back to server
-            self._client.sendMsg(gameData["players"][self.id])
+            self._client.sendMsg(localPlayer)
             self.clock.tick(60)
 
 
