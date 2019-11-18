@@ -28,18 +28,6 @@ class clientThread(threading.Thread):
                     else:
                         #print(f'receive {msg}')
                         setGameServerData(msg)
-
-                    # if msg:
-
-                    #     msg["players"][int(
-                    #         id)]["data"][0][0] += random.randint(-2, 2)
-                    #     msg["players"][int(
-                    #         id)]["data"][0][1] += random.randint(-2, 2)
-                    #     encodedMsg = pickle.dumps(msg)
-                    #     lenMsg = len(encodedMsg)
-                    #     msg = f"{lenMsg:>{self.headerLength}}".encode()+encodedMsg
-                    #     # print(msg)
-                    #     client.send(msg)
                 else:
                     print("Player disconnected")
                     sayGoodbye(playerID, playerID)
