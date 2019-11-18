@@ -66,13 +66,3 @@ class clientGame:
 
 
 game = clientGame()
-
-# print("HERE!")
-# x = 0
-# while x > -1:
-#     # accept connections from outside
-#     _client.recieve()
-#     _client.send(f"Wei Ni Hao {x}")
-#     x += 1
-#     # s.close()
-# _client.socket.close()
