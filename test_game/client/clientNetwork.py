@@ -2,12 +2,22 @@ import socket
 import pickle
 import pygame
 
-# Simple socket network connection
+# Simple socket network connection for the client
+# Here we handle first connecting to the main server , parsing the unique ID we get back
+# Then we have helper functions for recieving a message and sending a message. The helper functions conform the below protocol
+
 '''
-Communication protocol:
-    Connect to server -> server responds with id value as string
-    All other messages are sent and recved encoded:
-        Msg format -> Len of msg (10 chars)+Pickled_Msg 
+Message Format:
+  "HEADER+DATA"
+  Header -> 10 characters for int value of pickled message length. Int value is right adjusted to a length of 10
+  Data   -> Data is sent as a pickled message (serialized then encoded to bytes) and whose encoded length is denoted in the header
+
+Receiving Data:
+    Data is recieved first by reading 10 bytes to get the header, the recieved value is decoded and stored as the data length var
+    Then read X amount of bytes depending on the header and then depickle the message to the object that was orinally sent
+
+Sending Data:
+    The data is first pickled and then the length of the pickled data is calculated. The information is then placed in it's repsective location in the message format
 '''
 
 

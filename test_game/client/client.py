@@ -41,17 +41,26 @@ class clientGame:
         self._client.sendMsg("get_game_data")
         return self._client.recieveHeader()
 
+    # After connection we will then run our main game loop forever
+    # Here we will continually ask the server for the newest game data, perform our own actions, send the actions back to the server so it can update the global game state
+    # and then lastly draw all the changes
     def mainGameLoop(self):
+        # Run forever!
         while self.gameState == "running":
+
+            # Handle the user quiting the game via the X button
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.gameState == "quit"
                     quit()
 
-            # Get the full game data
+            # Get the full game data from the server, this calls the helper function in our clientNetwork file
             gameData = self.getGameData()
+
+            # Set a local instance of the specific player from the global game data
             localPlayer = gameData["players"][self.id]
 
+            # GAME LOGIC AREA -> First check if the game data exists though for safety
             # Perform player actions here
             if gameData != None:
                 keys = pygame.key.get_pressed()
@@ -68,7 +77,8 @@ class clientGame:
                 print(gameData)
                 continue
 
-            # Draw game
+            # Now update the instance of the global game data you recieved from the server with your new player
+            # Draw the updates on your screen for your local player and all other players
             gameData["players"][self.id] = localPlayer
             self.drawGame(gameData)
 
