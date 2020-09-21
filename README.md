@@ -1,5 +1,5 @@
 
-# Pygame Server With Threads and Full Class Setup
+# Pygame Server - Multi Threaded and Class Based
 
 ### Overview
 Functional multiplayer setup for local and online multiplayer python games using sockets. Both server and client are implemented via classes. The server will spawn new threads for all new client connections and implements a semaphore for data synchronization when child threads are writing to its parent. The shared data is the game state and is protected when each child thread writes its new state and access the entire game state. 
